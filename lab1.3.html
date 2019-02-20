@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>task3</title>
+</head>
+<body>
+	<script type="text/javascript">		
+		var a = getRand();
+		var text = prompt("Введите текст размером не менее " + a + " символов");
+		alert("В тексте "+getLength(text)+" символов");
+		var msg1 = "В строке есть слово ";
+		var msg2 = "В строке нет слова ";
+		var str1 = "был";
+		var str2 = "есть";
+		var str3 = "имеет";
+		if(containsWord(text, str1)){
+			alert(msg1 + str1);
+		}else{
+			alert(msg2 + str1);
+		}
+		if(containsWord(text, str2)){
+			alert(msg1 + str2);
+		}else{
+			alert(msg2 + str2);
+		}
+		if(containsWord(text, str3)){
+			alert(msg1 + str3);
+		}else{
+			alert(msg2 + str3);
+		}
+		alert("В тексте " + getWordsCount(text) + " слов");
+		alert(Replace(text));
+
+		function getRand(){
+			var rnd = parseInt(Math.random()*91);
+			return rnd + 10;
+		}
+		function getLength(txt){
+			return txt.length;
+		}
+		function getWordsCount(txt){
+			return txt.split(' ').length;
+		}
+		function containsWord(txt, wrd){
+			return txt.indexOf(wrd) >= 0;
+		}
+		function Replace(txt){
+			var strArr = txt.split(' ');
+			var t = strArr[0];
+			strArr[0] = strArr[strArr.length - 1];
+			strArr[strArr.length - 1] = t;
+			return strArr.join(' ');
+		}
+	</script>
+</body>
+</html>
