@@ -1,0 +1,20 @@
+<html>
+<head><title>Site</title></head>
+<body>
+	
+	<h1 id="1">какой-то текст</h1>
+	<a id="2">что бы написать</a>
+	<form>
+		<script type="text/javascript">
+		function changeText(){
+			var text = "Произошла замена";			
+			document.getElementById("1").innerHTML = text;
+			var now = new Date();
+			document.getElementById("2").innerHTML = now;
+		}
+		</script>
+		<input type="button" value="Нажать для замены текста" onclick="changeText();">		
+	</form>
+	
+	
+</body>
