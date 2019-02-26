@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>task6</title>
+</head>
+<body>
+	<b id="0">Лучшее время года – зима!</b>
+	<script type="text/javascript">
+		var a = ["зима", "весна", "лето", "осень"];
+		var t = 0;
+		var timerId = setTimeout(function tick() {
+  									document.getElementById("0").innerHTML = "Лучшее время года – " + a[t%4] + "!";
+  									t++;
+  									timerId = setTimeout(tick, 2000);
+								}, 2000);
+	</script>
+</body>
+</html>
