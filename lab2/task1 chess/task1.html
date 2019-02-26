@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chess</title>
+	<link rel="stylesheet" type="text/css" href="field.css">
+	<script src="script.js"></script>
+</head>
+<body>
+	<div align="center">
+		<img name="b_pawn" src="b_pawn.png" width="68" height="100" onclick="setField(this);">
+		<img name="b_knight" src="b_knight.png" width="100" height="100" onclick="setField(this);">
+		<img name="b_bishop" src="b_bishop.png" width="100" height="100" onclick="setField(this);">
+		<img name="b_rook" src="b_rook.png" width="75" height="100" onclick="setField(this);">
+		<img name="b_queen" src="b_queen.png" width="100" height="100" onclick="setField(this);">
+		<img name="b_king" src="b_king.png" width="100" height="100" onclick="setField(this);">
+		<br>
+		<img name="w_pawn" src="w_pawn.png" width="68" height="100" onclick="setField(this);">
+		<img name="w_knight" src="w_knight.png" width="100" height="100" onclick="setField(this);">
+		<img name="w_bishop" src="w_bishop.png" width="100" height="100" onclick="setField(this);">
+		<img name="w_rook" src="w_rook.png" width="75" height="100" onclick="setField(this);">
+		<img name="w_queen" src="w_queen.png" width="100" height="100" onclick="setField(this);">
+		<img name="w_king" src="w_king.png" width="100" height="100" onclick="setField(this);">
+	</div>
+	<div align="center">
+		<table id="chess">
+			<tr id="9">
+				<td class="corner"></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td class="corner"></td>
+			</tr>
+			<tr id="8">
+				<td>8</td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td>8</td>
+			</tr>
+			<tr id="7">
+				<td>7</td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td>7</td>
+			</tr>
+			<tr id="6">
+				<td>6</td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td>6</td>
+			</tr>
+			<tr id="5">
+				<td>5</td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td>5</td>
+			</tr>
+			<tr id="4">
+				<td>4</td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" id="start" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td>4</td>
+			</tr>
+			<tr id="3">
+				<td>3</td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td>3</td>
+			</tr>
+			<tr id="2">
+				<td>2</td>
+				<td class="white" onclick="go(this)"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td>2</td>
+			</tr>
+			<tr id="1">
+				<td>1</td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td class="black" onclick="go(this);"></td>
+				<td class="white" onclick="go(this);"></td>
+				<td>1</td>
+			</tr>
+			<tr id="0"><td class="corner"></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td class="corner"></td></tr>
+		</table>
+	</div>
+</body>
+</html>
