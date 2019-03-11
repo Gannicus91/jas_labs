@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>task6</title>
+	<script type="text/javascript">
+		var a = ["b_rook.png", "b_king.png", "b_bishop.png", "b_knight.png", "b_pawn.png", "b_queen.png"];
+		var t = 0;
+		var timerId = setTimeout(function tick() {
+  			document.getElementById("0").firstChild.src = a[t%6];
+  			t++;
+  			timerId = setTimeout(tick, 2000);
+		}, 2000);
+	</script>
+	<style>
+		div {
+			border = 5px;
+			border-color = red;
+			align = center;
+		}
+	</style>
+</head>
+<body>
+	<div id="0"><img name="slide" src="b_pawn.png"></div>
+	
+</body>
+</html>
