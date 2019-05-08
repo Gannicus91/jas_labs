@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Объекты</title>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script>
+            var form_input_ind = 0;
+            $(document).ready(function(){
+                $("div#new_student input[name='surname']").focus();
+                $('#add').click(function(){
+                    $("div#new_student input[name='surname']").focus();
+                });
+                $(document).keypress(function(e){                    
+                    var el = document.forms[0].elements; 
+                    if(e.which == 13){
+                        form_input_ind++;                       
+                        if(form_input_ind < el.length)
+                            el[form_input_ind].focus();
+                    }
+                });
+                $("input[name='surname']").keypress(function(e){
+                    if(!((e.which >= 65 && e.which <=90 ||
+                            e.which >= 97 && e.which <=122 ||
+                            e.which >= 1040 && e.which <= 1103) ||
+                            e.which == 1025 || e.which == 1105) || $(this).val().length+1>30){
+                            e.preventDefault();
+                        }
+                });
+                $("input[name='name']").keypress(function(e){
+                    if(!((e.which >= 65 && e.which <=90 ||
+                            e.which >= 97 && e.which <=122 ||
+                            e.which >= 1040 && e.which <= 1103) ||
+                            e.which == 1025 || e.which == 1105) || $(this).val().length+1>30){
+                            e.preventDefault();
+                        }
+                });
+                $("input[name='secondname']").keypress(function(e){
+                    if(!((e.which >= 65 && e.which <=90 ||
+                            e.which >= 97 && e.which <=122 ||
+                            e.which >= 1040 && e.which <= 1103) ||
+                            e.which == 1025 || e.which == 1105) || $(this).val().length+1>30){
+                            e.preventDefault();
+                        }
+                });
+                $("input[name='id']").keypress(function(e){
+                    if(!(e.which >= 48 && e.which <=57) || $(this).val().length+1>8){
+                            e.preventDefault();
+                        }
+                });
+                $("input[name='phone_number']").keypress(function(e){
+                    if(!(e.which >= 48 && e.which <=57) || $(this).val().length+1>10){
+                            e.preventDefault();
+                        }
+                });
+                $("input[name='email']").keypress(function(e){
+                    if(!((e.which >= 64 && e.which <=90 ||
+                            e.which >= 97 && e.which <=122 || 
+                            e.which >= 48 && e.which <=57 ||
+                            e.which == 39 || e.which == 45 || e.which == 46 || e.which == 95 || e.which == 43)) || $(this).val().length+1>50){
+                            e.preventDefault();
+                        }
+                });
+                $("input[name='save']").keypress(function(e){
+                    if(e.which == 13){
+                        e.preventDefault();
+                    }
+                });
+            });
+            function Student(surname, name, secondname, sex, group, id, phone_number, email, exams){
+                this.surname = surname;
+                this.name = name;
+                this.secondname = secondname;
+                this.sex = sex;
+                this.group = group;
+                this.id = id;
+                this.phone_number = phone_number;
+                this.email = email;
+                this.exams = exams;
+            }
+            var students = new Array();
+            var cur_page = 'new_student';
+            var groups = ['МОС-181', 'МОС-171', 'МОС-161', 'МОС-151'];
+            function addStudent(){
+                let surname = document.forms[0].surname;
+                let name = document.forms[0].name;
+                let secondname = document.forms[0].secondname;
+                let sex_list = document.forms[0].sex;
+                let group = document.forms[0].group;
+                let id = document.forms[0].id;
+                let phone_number = document.forms[0].phone_number;
+                let email = document.forms[0].email;
+                let exams_list = document.forms[0].exams;
+                let exams = new Array();
+                for(var i = 0; i < exams_list.length; i++){
+                    if(exams_list[i].checked){
+                        exams.push(exams_list[i].value);
+                    }
+                }
+                let sex = sex_list[0].checked ? sex_list[0] : sex_list[1];
+                group = group.options[group.options.selectedIndex];
+                students.push(new Student(surname.value, 
+                                            name.value, 
+                                            secondname.value, 
+                                            sex.value, 
+                                            group.text, 
+                                            id.value, 
+                                            phone_number.value, 
+                                            email.value, 
+                                            exams));
+                addToTable(students[students.length-1]);
+                document.forms[0].reset();
+                form_input_ind = 0;
+                select_page('data_list');
+            }
+            function select_page(new_page){
+                var np = document.getElementById(new_page);
+                np.style="display:block"
+                var op = document.getElementById(cur_page)
+                op.style="display:none"
+                cur_page=new_page
+            }
+            function addToTable(student){
+                let table = document.getElementById('table');
+                let row = document.createElement('tr');
+                row.setAttribute('id', students.indexOf(student));
+                for (let key in student){
+                    let dat = document.createElement('td');
+                    dat.innerHTML = student[key];
+                    row.appendChild(dat);
+                }
+                let button = document.createElement('input');
+                let ind = students.indexOf(student);
+                button.type = 'button';
+                button.value = 'edit'
+                button.onclick = function(){
+                    edit(ind);
+                }                 
+                row.appendChild(button);
+                table.appendChild(row);
+            }
+            function edit(ind){
+                document.getElementById('num').innerHTML = ind;
+                let student = students[ind];
+                select_page('edit');
+                document.forms[1].surname.value = student.surname;
+                document.forms[1].name.value = student.name;
+                document.forms[1].secondname.value = student.secondname;
+                document.forms[1].group.selectedIndex = groups.indexOf(student.group);
+                if(student.sex == 'М'){
+                    document.forms[1].sex[0].checked = true;
+                }else document.forms[1].sex[1].checked = true;
+                document.forms[1].id.value = student.id;
+                document.forms[1].phone_number.value = student.phone_number;
+                document.forms[1].email.value = student.email;
+                let exams_list = document.forms[1].exams;
+                for(var i = 0; i < exams_list.length; i++){
+                    if(student.exams.indexOf(exams_list[i].value) != -1){
+                        exams_list[i].checked = true;
+                    }
+                }
+            }
+            function saveChanges(){
+                let ind = parseInt(document.getElementById('num').innerHTML);
+                let surname = document.forms[1].surname;
+                let name = document.forms[1].name;
+                let secondname = document.forms[1].secondname;
+                let sex_list = document.forms[1].sex;
+                let group = document.forms[1].group;
+                let id = document.forms[1].id;
+                let phone_number = document.forms[1].phone_number;
+                let email = document.forms[1].email;
+                let exams_list = document.forms[1].exams;
+                let exams = new Array();
+                for(var i = 0; i < exams_list.length; i++){
+                    if(exams_list[i].checked){
+                        exams.push(exams_list[i].value);
+                    }
+                }
+                let sex = sex_list[0].checked ? sex_list[0] : sex_list[1];
+                group = group.options[group.options.selectedIndex];
+                students[ind].surname = surname.value;
+                students[ind].name = name.value;
+                students[ind].secondname = secondname.value;
+                students[ind].sex = sex.value;
+                students[ind].group = group.text;
+                students[ind].id = id.value;
+                students[ind].phone_number = phone_number.value;
+                students[ind].email = email.value;
+                students[ind].exams = exams;
+                refreshTable(ind);
+                document.forms[1].reset();
+                select_page('data_list');
+            }
+            function refreshTable(ind){
+                let row = document.getElementById(ind);
+                let student = students[ind];
+                let td_ind = 0;
+                for (let key in student){
+                    let dat = row.cells[td_ind];
+                    dat.innerHTML = student[key];
+                    td_ind++;
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div id='new_student'>
+            <form>
+                <p id='name'>
+                    <label>Фамилия <input type="text" name="surname"></label><br>
+                    <label>Имя <input type="text" name="name"></label><br>
+                    <label>Отчество <input type="text" name="secondname"></label>
+                </p>
+                <p>
+                    Пол:  
+                    <label>М<input value="М" type="radio" name="sex"></label>
+                    <label>Ж<input value="Ж" type="radio" name="sex"></label><br>
+                    
+                </p>                
+                <p>
+                    <label>Номер зачетки <input type="text" name="id"></label><br>
+                    <label>Телефон +7<input type="text" name="phone_number"></label><br>
+                    <label>e-mail <input type="text" name="email"></label><br>
+                </p>
+                <p>
+                    <label>Группа: 
+                        <select name="group">                    
+                            <option value="1">МОС-181</option>
+                            <option value="2">МОС-171</option>
+                            <option value="3">МОС-161</option>
+                            <option value="4">МОС-151</option>
+                        </select><br>
+                    </label>
+                </p>
+                <p>
+                    Экзамены: <br>
+                    <label><input value="Русский" type="checkbox" name="exams">Русский</label><br>
+                    <label><input value="Математика" type="checkbox" name="exams">Математика</label><br>
+                    <label><input value="Информатика" type="checkbox" name="exams">Информатика</label><br>
+                    <label><input value="Физика" type="checkbox" name="exams">Физика</label><br>
+                    <label><input value="Обществознание" type="checkbox" name="exams">Обществознание</label><br>
+                    <label><input value="История" type="checkbox" name="exams">История</label><br>
+                </p>
+                <p>
+                    <input type="button" onclick="addStudent();" name="save" value="Отправить">
+                </p>
+            </form>
+        </div> 
+        <div style="display:none" id='data_list'>
+            <table id='table'>
+                <tr>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Отчество</th>
+                    <th>Пол</th>
+                    <th>Группа</th>
+                    <th>Номер зачетки</th>
+                    <th>Телефон</th>
+                    <th>эл. почта</th>
+                    <th>Экзамены</th>
+                </tr>
+            </table>
+            <input id='add' value="добавить еще" type="button" onclick="select_page('new_student');">
+        </div>
+        <div style="display:none" id='edit'>
+            <h3>Редактировать студента №<text id='num'></text></h3><br>
+            <form>
+                <p>
+                    <label>Фамилия <input type="text" name="surname"></label><br>
+                    <label>Имя <input type="text" name="name"></label><br>
+                    <label>Отчество <input type="text" name="secondname"></label>
+                </p>
+                <p>
+                    Пол:  
+                    <label>М<input value="М" type="radio" name="sex"></label>
+                    <label>Ж<input value="Ж" type="radio" name="sex"></label><br>
+                    
+                </p>
+                <p>
+                    <label>Номер зачетки <input type="text" name="id"></label><br>
+                    <label>Телефон +7<input type="text" name="phone_number"></label><br>
+                    <label>e-mail <input type="text" name="email"></label><br>
+                </p>
+                <p>
+                    <label>Группа: 
+                        <select name="group">                    
+                            <option value="1">МОС-181</option>
+                            <option value="2">МОС-171</option>
+                            <option value="3">МОС-161</option>
+                            <option value="4">МОС-151</option>
+                        </select><br>
+                    </label>
+                </p>
+                <p>
+                    Экзамены: <br>
+                    <label><input value="Русский" type="checkbox" name="exams">Русский</label><br>
+                    <label><input value="Математика" type="checkbox" name="exams">Математика</label><br>
+                    <label><input value="Информатика" type="checkbox" name="exams">Информатика</label><br>
+                    <label><input value="Физика" type="checkbox" name="exams">Физика</label><br>
+                    <label><input value="Обществознание" type="checkbox" name="exams">Обществознание</label><br>
+                    <label><input value="История" type="checkbox" name="exams">История</label><br>
+                </p>
+                <p>
+                    <input type="button" onclick="saveChanges();" name="save" value="Сохранить изменения">
+                </p>
+            </form>
+        </div> 
+    </body>
+</html>
